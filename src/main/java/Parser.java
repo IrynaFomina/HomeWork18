@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
-    static List<Event> eventList = new ArrayList<>();
+    private static List<Event> eventList = new ArrayList<>();
 
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -39,25 +39,31 @@ public class Parser {
                         event.setEvent_date(nodeList.item(i).getTextContent());
                         break;
                     case "event_parameters":
-                        NodeList params = nodeList.item(i).getChildNodes();
-                        for (int j = 0; j < params.getLength(); j++) {
-                            switch (params.item(j).getNodeName()) {
-                                case "priority":
-                                    event.setPriority(Integer.parseInt(params.item(j).getTextContent()));
-                                    break;
-                                case "log_level":
-                                    event.setLog_level(params.item(j).getTextContent());
-                                    break;
-                                case "source":
-                                    event.setSource(params.item(j).getTextContent());
-                                    break;
-                            }
-                        }
+                        event.setEventParameters(createEventParameters(nodeList.item(i)));
                         break;
                 }
             }
 
         }
         return event;
+    }
+
+    private static EventParameters createEventParameters (Node parameters){
+        NodeList params = parameters.getChildNodes();
+        EventParameters eventParameters = new EventParameters();
+        for (int j = 0; j < params.getLength(); j++) {
+            switch (params.item(j).getNodeName()) {
+                case "priority":
+                    eventParameters.setPriority(Integer.parseInt(params.item(j).getTextContent()));
+                    break;
+                case "log_level":
+                    eventParameters.setLog_level(params.item(j).getTextContent());
+                    break;
+                case "source":
+                    eventParameters.setSource(params.item(j).getTextContent());
+                    break;
+            }
+        }
+        return eventParameters;
     }
 }

@@ -1,9 +1,8 @@
 public class Event {
     private String event_id;
     private String event_date;
-    private int priority;
-    private String log_level;
-    private String source;
+    private EventParameters eventParameters;
+
 
     public void setEvent_id(String event_id) {
         this.event_id = event_id;
@@ -13,16 +12,8 @@ public class Event {
         this.event_date = event_date;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public void setLog_level(String log_level) {
-        this.log_level = log_level;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
+    public void setEventParameters(EventParameters eventParameters) {
+        this.eventParameters = eventParameters;
     }
 
     @Override
@@ -30,9 +21,7 @@ public class Event {
         return "Event{" +
                 "event_id='" + event_id + '\'' +
                 ", event_date='" + event_date + '\'' +
-                ", priority=" + priority +
-                ", log_level='" + log_level + '\'' +
-                ", source='" + source + '\'' +
+                ", eventParameters=" + eventParameters +
                 '}';
     }
 }
