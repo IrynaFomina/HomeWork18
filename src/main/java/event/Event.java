@@ -1,3 +1,5 @@
+package event;
+
 public class Event {
     private String event_id;
     private String event_date;
@@ -18,7 +20,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event{" +
+        return "event.Event{" +
                 "event_id='" + event_id + '\'' +
                 ", event_date='" + event_date + '\'' +
                 ", eventParameters=" + eventParameters +

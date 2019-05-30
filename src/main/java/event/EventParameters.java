@@ -1,3 +1,5 @@
+package event;
+
 public class EventParameters {
     private int priority;
     private String log_level;
@@ -17,7 +19,7 @@ public class EventParameters {
 
     @Override
     public String toString() {
-        return "EventParameters{" +
+        return "event.EventParameters{" +
                 "priority=" + priority +
                 ", log_level='" + log_level + '\'' +
                 ", source='" + source + '\'' +

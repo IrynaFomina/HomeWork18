@@ -1,32 +1,36 @@
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
+package xmlPraser;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.io.InputStream;
+import event.Event;
+import event.EventParameters;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parser {
-    private static List<Event> eventList = new ArrayList<>();
+public class EventsParser implements IDOMXMLParser{
+//    private Document document;
+private List<Event> eventList;
 
-    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        InputStream is = Parser.class.getClassLoader().getResourceAsStream("Events.xml");
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(is);
-
-        NodeList nodeList = document.getDocumentElement().getElementsByTagName("event");
-        for (int i = 0; i < nodeList.getLength(); i++) {
-                eventList.add(createEvent(nodeList.item(i)));
-        }
-        System.out.println(eventList);
+    public EventsParser() {
     }
 
-    private static Event createEvent(Node eventNode) {
-        NodeList nodeList = eventNode.getChildNodes();
+    @Override
+    public List<Event> parse(Document document) {
+        NodeList nodeList = document.getDocumentElement().getElementsByTagName("event");
+        eventList = new ArrayList<>();
+
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            eventList.add(createEvent(nodeList.item(i)));
+        }
+        return eventList;
+    }
+
+    private Event createEvent(Node eventNode) {
+//        eventList = event.EventParameters().
+                NodeList nodeList = eventNode.getChildNodes();
         Event event = new Event();
 
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -48,7 +52,7 @@ public class Parser {
         return event;
     }
 
-    private static EventParameters createEventParameters (Node parameters){
+    private  EventParameters createEventParameters (Node parameters){
         NodeList params = parameters.getChildNodes();
         EventParameters eventParameters = new EventParameters();
         for (int j = 0; j < params.getLength(); j++) {
